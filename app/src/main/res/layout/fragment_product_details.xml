@@ -9,23 +9,97 @@
             type="tech.bawano.mobiledevtest.models.Product" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.details.ProductDetailsFragment">
 
-        <TextView
-            android:id="@+id/text_gallery"
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardCornerRadius="5dp">
+
+            <ImageView
+                android:id="@+id/productImage"
+                setImage="@{product.url}"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="6dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{product.currentValue}"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/bookmark"
+                    tools:text="price" />
+
+                <ImageView
+                    android:id="@+id/bookmark"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_unbookmarked"
+                    setBookmarked = "@{product.isSaved}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@{product.name}"
+                android:textColor="@color/grey"
+                android:textSize="11sp"
+                tools:text="name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@{product.description}"
+                android:textColor="@color/grey"
+                android:textSize="11sp"
+                tools:text="name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@{product.terms}"
+                android:textColor="@color/grey"
+                android:textSize="11sp"
+                tools:text="name" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 </layout>

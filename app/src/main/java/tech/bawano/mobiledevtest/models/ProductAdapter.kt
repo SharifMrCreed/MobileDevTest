@@ -2,17 +2,22 @@ package tech.bawano.mobiledevtest.models
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tech.bawano.mobiledevtest.databinding.RvProductItemBinding
 
-class ProductAdapter() : ListAdapter<Product, ProductAdapter.ProductViewHolder>(callback) {
+class ProductAdapter(fragment: Fragment) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(callback) {
 
+
+    private var onProductClick: OnProductClick
+    init {
+        onProductClick = fragment as OnProductClick
+    }
     interface OnProductClick {
-        fun onClick(product: Product)
+        fun onClick(id: Int)
     }
 
-    private lateinit var onProductClick: OnProductClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
          ProductViewHolder(RvProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -22,18 +27,15 @@ class ProductAdapter() : ListAdapter<Product, ProductAdapter.ProductViewHolder>(
         holder.bind(position)
 
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        recyclerView.context.run {
-            onProductClick = this as OnProductClick
-        }
-    }
 
     inner class ProductViewHolder(private val b: RvProductItemBinding) : RecyclerView.ViewHolder(b.root) {
         fun bind(position: Int) {
-
+            val product = getItem(position)
+            b.product = product
+            b.root.setOnClickListener{
+                onProductClick.onClick(product.id)
+            }
         }
-
     }
 
 }

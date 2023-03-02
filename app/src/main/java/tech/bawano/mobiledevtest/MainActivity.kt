@@ -13,7 +13,7 @@ import tech.bawano.mobiledevtest.databinding.ActivityMainBinding
 import tech.bawano.mobiledevtest.models.Product
 import tech.bawano.mobiledevtest.models.ProductAdapter
 
-class MainActivity : AppCompatActivity(), ProductAdapter.OnProductClick {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -33,9 +33,7 @@ class MainActivity : AppCompatActivity(), ProductAdapter.OnProductClick {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_products, R.id.nav_product_details, R.id.nav_slideshow
-            )
+            setOf(R.id.nav_products, R.id.nav_product_details)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
@@ -51,8 +49,4 @@ class MainActivity : AppCompatActivity(), ProductAdapter.OnProductClick {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-
-    override fun onClick(product: Product) {
-        navController.navigate(R.id.nav_product_details, bundleOf("product" to product))
-    }
 }

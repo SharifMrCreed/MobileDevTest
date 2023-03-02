@@ -16,9 +16,13 @@ import tech.bawano.mobiledevtest.databinding.FragmentProductsBinding
 import tech.bawano.mobiledevtest.models.Product
 import tech.bawano.mobiledevtest.models.ProductAdapter
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : Fragment(), ProductAdapter.OnProductClick {
 
     private lateinit var b: FragmentProductsBinding
+    private val vm by lazy {
+        ViewModelProvider(this)[ProductsViewModel::class.java]
+
+    }
 
 
     override fun onCreateView(
@@ -26,24 +30,35 @@ class ProductsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val productsViewModel = ViewModelProvider(this)[ProductsViewModel::class.java]
-
         b = FragmentProductsBinding.inflate(inflater, container, false)
 
-        val adapter = ProductAdapter()
+        val adapter = ProductAdapter(this)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         b.recyclerView.apply {
             setAdapter(adapter)
             layoutManager = gridLayoutManager
         }
-
         lifecycleScope.launch {
-            productsViewModel.products.collect { productList ->
-                adapter.submitList(productList)
+            vm.getAllProducts().collect { productList ->
+                if (productList.isEmpty()){
+                    vm.insertProducts()
+                }else{
+                    b.progressBar.visibility = View.GONE
+                    adapter.submitList(productList)
+                }
             }
         }
 
+
         return b.root
+    }
+
+    override fun onClick(id:Int) {
+        findNavController().navigate(
+            R.id.nav_product_details,
+            bundleOf("id" to id)
+        )
+
     }
 
 }

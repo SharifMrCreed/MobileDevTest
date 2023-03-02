@@ -4,49 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="topic"
+            name="product"
             type="tech.bawano.mobiledevtest.models.Product" />
     </data>
 
     <LinearLayout
         android:id="@+id/cv_topic_parent"
-        android:layout_width="110dp"
-        android:layout_margin="4dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/item_card_view"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:elevation="12dp"
-            app:cardElevation="12dp"
-            app:cardCornerRadius="12dp">
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardCornerRadius="5dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_topic_ic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="12dp"
-                android:layout_gravity="center_horizontal"/>
-        </com.google.android.material.card.MaterialCardView>
+            <ImageView
+                android:id="@+id/productImage"
+                setImage="@{product.url}"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="6dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{product.currentValue}"
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/bookmark"
+                tools:text="price" />
+
+            <ImageView
+                android:id="@+id/bookmark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_unbookmarked"
+                setBookmarked = "@{product.isSaved}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_topic"
-            style="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/productName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:gravity="center"
-            android:maxWidth="100dp"
-            tools:text="price"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="3dp"
+            android:text="@{product.name}"
+            android:textColor="@color/grey"
+            android:textSize="11sp"
+            tools:text="name" />
+
 
     </LinearLayout>
 </layout>

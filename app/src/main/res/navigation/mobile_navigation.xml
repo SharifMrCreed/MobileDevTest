@@ -14,10 +14,10 @@
     <fragment
         android:id="@+id/nav_product_details"
         android:name="tech.bawano.mobiledevtest.ui.details.ProductDetailsFragment"
-        android:label="{product.name}"
+        android:label="Details"
         tools:layout="@layout/fragment_product_details" >
         <argument
-            android:name="product"
-            app:argType="tech.bawano.mobiledevtest.models.Product" />
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>
