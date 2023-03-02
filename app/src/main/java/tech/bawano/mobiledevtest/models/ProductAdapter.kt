@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tech.bawano.mobiledevtest.databinding.RvProductItemBinding
 
+/**
+ * This adapter is required by the recyclerview to load data in an efficient way. only what is visible
+ * or what is soon to be visible is loaded. that is ~15 items at a time and then the views are recycled
+ */
 class ProductAdapter(fragment: Fragment) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(callback) {
 
 
@@ -29,6 +33,8 @@ class ProductAdapter(fragment: Fragment) : ListAdapter<Product, ProductAdapter.P
 
 
     inner class ProductViewHolder(private val b: RvProductItemBinding) : RecyclerView.ViewHolder(b.root) {
+        // the bind method helps much when you have multiple item views that your adapter might need to load
+        // I might call it best practice but that's not written anywhere
         fun bind(position: Int) {
             val product = getItem(position)
             b.product = product

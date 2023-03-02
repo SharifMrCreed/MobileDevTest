@@ -22,6 +22,8 @@ class ProductDetailsFragment : Fragment() {
         ViewModelProvider(this)[ProductsViewModel::class.java]
 
     }
+
+    // this will contain any arguments set on the fragment. in this case the id of the product.
     private val args:ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -33,6 +35,7 @@ class ProductDetailsFragment : Fragment() {
         b = FragmentProductDetailsBinding.inflate(inflater, container, false)
         id = args.id
 
+        // we get the product and pass it to the view to be bound
         lifecycleScope.launch {
             vm.getProduct(id).collect{
                 product = it
@@ -41,6 +44,8 @@ class ProductDetailsFragment : Fragment() {
 
         }
 
+        //on clicking the bookmark button the product is updated appropriately. in this case its a
+        // database update but it could as well be a rest Api call
         b.bookmark.setOnClickListener {
             product.isSaved = !product.isSaved
             vm.update(product)

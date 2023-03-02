@@ -6,6 +6,10 @@ import com.bumptech.glide.Glide
 import tech.bawano.mobiledevtest.R
 
 
+/**
+ * A helper for the various required bindings.
+ */
+
 @BindingAdapter("setImage")
 fun setImage(view: ImageView, uri: String?) =
     Glide.with(view).load(uri).centerInside().into(view)

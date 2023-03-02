@@ -19,9 +19,16 @@ import tech.bawano.mobiledevtest.repository.Repository
 
 class ProductsViewModel(val app:Application) : AndroidViewModel(app) {
 
+    /** This view model is responsible for supplying the views with the necessary data they require.
+     * Most of this data will come out of a repository
+     * The repository needs a dao object that is provided by the database instance.
+     * the database instance requires the application context for its instantiation
+     * Dependency injection with hilt would make all this easier but would make the app abit complex
+    */
     private val repository:Repository
 
     init {
+
         val productDatabase = ProductDatabase.getInstance(app)
         repository = Repository(productDatabase.productDao())
     }
@@ -34,6 +41,14 @@ class ProductsViewModel(val app:Application) : AndroidViewModel(app) {
 
     suspend fun getProduct(id:Int) = repository.getProduct(id)
 
+    /**
+     * This method gets the json data from the offers file provided as an input stream, then i
+     * convert the bytes into characters and recreate the json data. It needs refactoring as
+     * the encoding is not UTF-8 and some data is not well represented
+     * it is also incredibly slow so im running it on the IO thread. There must be a better way to
+     * do this but in the interest of time ill leave it at this. to combat some of this i save all
+     * the products in a room database so that i don't have to call this method again
+     */
     fun insertProducts(){
         viewModelScope.launch(Dispatchers.IO) {
             val gson = Gson()
