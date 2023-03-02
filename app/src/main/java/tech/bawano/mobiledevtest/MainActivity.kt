@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.ui.setupWithNavController
 import tech.bawano.mobiledevtest.databinding.ActivityMainBinding
 import tech.bawano.mobiledevtest.models.Product
 import tech.bawano.mobiledevtest.models.ProductAdapter
@@ -33,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_products, R.id.nav_product_details)
+            setOf(R.id.nav_products)
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
